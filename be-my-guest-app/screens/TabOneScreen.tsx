@@ -6,7 +6,7 @@ import {
   StatusBar,
 } from 'react-native';
 
-import { Avatar, Container, Heading, Box, Text, Stack, HStack, Center, Button} from "native-base";
+import { Avatar, Container, Heading, Box, Text, Stack, HStack, Center, Button, Spacer} from "native-base";
 
 import { View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
@@ -85,9 +85,12 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   
   return (
-    <View>
+    <View style={styles.page}>
+      <HStack>
       <Text>Tab One</Text>
-
+      <Spacer></Spacer>
+      <Button onPress={() => navigation.navigate('NewEvent')}>Pubblica evento</Button>
+      </HStack>
       <FlatList
         data={mockData}
         renderItem={({item}: {item: Item}) => <Item
@@ -105,4 +108,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 }
 
 const styles = StyleSheet.create({
+  page: {
+    height: '100%',
+    padding: 4
+  }
 });

@@ -10,12 +10,48 @@ import { Avatar, Container, Heading, Box, Text, Stack, HStack, Center, Button, S
 
 import { View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
-import { formatWithOptions } from 'date-fns/fp'
-import { it } from 'date-fns/locale'
+import { formatWithOptions } from 'date-fns/fp';
+import { it } from 'date-fns/locale';
 import { Item, ItemRender } from '../models/models';
 import EventDataService from "../services/app.services";
+import { useEffect, useState } from "react";
+
+import AMPLIFY_CONFIG from '../constants/Amplify';
+import { Amplify, Auth, Hub } from "aws-amplify";
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+
+  useEffect(() => {
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          console.log("🚀 ~ signIn:");
+          //setUser(data);
+          break;
+        case "signOut":
+          console.log("🚀 ~ signIn:");
+          //setUser(null);
+          break;
+      }
+    });
+
+    Auth.currentAuthenticatedUser()
+      .then(currentUser => {
+        console.log("🚀 ~ currentUser:", currentUser);
+        //setUser(currentUser)
+      })
+      .catch((e) => {
+        console.log("🚀 ~ e:", e);
+        console.log("Not signed in")
+      });
+
+    return unsubscribe;
+  }, []);
+
+  Amplify.configure(AMPLIFY_CONFIG);
+  console.log("🚀 ~ AMPLIFY_CONFIG:", AMPLIFY_CONFIG);
+  const currentConfig = Auth.configure();
 
   const mockData: Item[] = [
     {
@@ -91,6 +127,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Spacer></Spacer>
       <Button onPress={() => navigation.navigate('NewEvent')}>Pubblica evento</Button>
       </HStack>
+      <Button onPress={() => Auth.federatedSignIn(
+        { provider: CognitoHostedUIIdentityProvider.Google }
+  )}>LogIn</Button>
       <FlatList
         data={mockData}
         renderItem={({item}: {item: Item}) => <Item

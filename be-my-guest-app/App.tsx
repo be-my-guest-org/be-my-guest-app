@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
+import * as React from 'react';
 import Navigation from './navigation';
 
 import { NativeBaseProvider, extendTheme  } from "native-base";

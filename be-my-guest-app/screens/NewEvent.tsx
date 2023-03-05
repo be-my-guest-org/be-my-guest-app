@@ -5,29 +5,32 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text } from '../components/Themed';
 import { View, Input, Button, Stack, FormControl, WarningOutlineIcon, TextArea } from 'native-base';
 import React from 'react';
+import DatePicker from 'react-native-date-picker'
 
 
 export default function NewEventScreen() {
-  const formInitialValues = {titolo: "", luogo: "", quando: "", descrizione:""};
-  const errorsInitialValues = {titolo: false, luogo: false, quando: false, descrizione:false};
-  const [state, setValue] = React.useState(formInitialValues);
-  const [errors, setErrors] = React.useState(errorsInitialValues);
+  const formInitialValues = {titolo: "", luogo: "", quando: new Date(), descrizione:""};
+  const formErrorsInitialValues = {titolo: false, luogo: false, quando: false, descrizione:false};
+  const uiStateInitialValues = {isDatePickerOpened: false};
+  const [formValues, setFormValues] = React.useState(formInitialValues);
+  const [formErrors, setFormErrors] = React.useState(formErrorsInitialValues);
+  const [uiState, setUiState] = React.useState(uiStateInitialValues);
 
   const validate = () => {
-    console.log("🚀 ~ state", state);
-    console.log("🚀 ~ errors", errors);
-    setErrors({
-      ...errors,
-      titolo: !state.titolo,
-      luogo: !state.luogo,
-      quando: !state.quando
+    console.log("🚀 ~ state", formValues);
+    console.log("🚀 ~ errors", formErrors);
+    setFormErrors({
+      ...formErrors,
+      titolo: !formValues.titolo,
+      luogo: !formValues.luogo,
+      quando: !formValues.quando
     });
-    console.log("🚀 ~  state",  state);
-    console.log("🚀 ~ errors", errors);
+    console.log("🚀 ~  state",  formValues);
+    console.log("🚀 ~ errors", formErrors);
   }
 
   const isFormValid = () => {
-    return !(errors.titolo || errors.luogo || errors.quando);
+    return !(formErrors.titolo || formErrors.luogo || formErrors.quando);
   };
 
   const saveNewEvent = () => {
@@ -35,7 +38,7 @@ export default function NewEventScreen() {
     validate();
     if (!isFormValid()) return;
     return isFormValid();
-    console.log("🚀 ~ value", state);
+    console.log("🚀 ~ value", formValues);
   }
 
   //const handleChange = (text: any) => setValue(text);
@@ -46,37 +49,53 @@ export default function NewEventScreen() {
     <View style={styles.page}>
       <Text style={styles.title}>Pubblica nuovo evento</Text>
       <Stack space={1}>
-      <FormControl isRequired isInvalid={errors.titolo}>
-        <FormControl.Label>Titolo</FormControl.Label>
-        <Input  style={styles.input} size="md" placeholder="Cena casalinga" onChangeText={(text: any) => setValue(
-          {...state, titolo: text}
+      <FormControl isRequired isInvalid={formErrors.titolo}>
+        <FormControl.Label color="primary.500">Titolo</FormControl.Label>
+        <Input  style={styles.input} size="md" placeholder="Cena casalinga" onChangeText={(text: any) => setFormValues(
+          {...formValues, titolo: text}
         )}/>
         <FormControl.ErrorMessage>
-        {errors.titolo && "Titolo obbligatorio"}
+        {formErrors.titolo && "Titolo obbligatorio"}
         </FormControl.ErrorMessage>
       </FormControl>
-      <FormControl isRequired isInvalid={errors.luogo}>
+      <FormControl isRequired isInvalid={formErrors.luogo}>
         <FormControl.Label>Luogo</FormControl.Label>
-        <Input style={styles.input} size="md" placeholder="Verona" onChangeText={(text: any) => setValue(
-           {...state, luogo: text}
+        <Input style={styles.input} size="md" placeholder="Verona" onChangeText={(text: any) => setFormValues(
+           {...formValues, luogo: text}
         )}/>
           <FormControl.ErrorMessage>
-          {errors.luogo && "Luogo obbligatorio"}
+          {formErrors.luogo && "Luogo obbligatorio"}
           </FormControl.ErrorMessage>
       </FormControl>
-      <FormControl isRequired isInvalid={errors.quando}>
+      <FormControl isRequired isInvalid={formErrors.quando}>
         <FormControl.Label>Quando</FormControl.Label>
-        <Input style={styles.input} size="md" placeholder={errors.luogo.toString()} onChangeText={(text: any) => setValue(
-          {...state, quando: text}
+        <Input style={styles.input} size="md" placeholder={"25/07/2025"} onPressOut={() => setUiState(
+          {...uiState, isDatePickerOpened: true})}
+          onChangeText={(text: any) => setFormValues(
+          {...formValues, quando: text}
         )}/>
+        <DatePicker
+          modal
+          open={uiState.isDatePickerOpened}
+          date={formValues.quando}
+          onConfirm={(date) => {
+            setUiState({...uiState, isDatePickerOpened: false});
+            setFormValues(
+              {...formValues, quando: date}
+            )
+          }}
+          onCancel={() => {
+            setUiState({...uiState, isDatePickerOpened: false})
+          }}
+        />
           <FormControl.ErrorMessage>
-          {errors.luogo && "Quando obbligatorio"}
+          {formErrors.luogo && "Quando obbligatorio"}
           </FormControl.ErrorMessage>
       </FormControl>
       <FormControl>
         <FormControl.Label>Descrizione</FormControl.Label>
-        <TextArea style={styles.textarea} size="sm" placeholder={description} onChangeText={(text: any) => setValue(
-          {...state, descrizione: text}
+        <TextArea style={styles.textarea} size="sm" placeholder={description} onChangeText={(text: any) => setFormValues(
+          {...formValues, descrizione: text}
         )}/>
       </FormControl>
       <Button onPress={() => saveNewEvent()}>Salva</Button>

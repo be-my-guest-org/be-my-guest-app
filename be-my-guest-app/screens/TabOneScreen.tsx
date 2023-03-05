@@ -74,9 +74,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             />
           </Center>
           <Stack p="5">
-            <Heading size="md">{itemProps.title}</Heading>
-            <Text fontSize="xs" color="#6E357B">{itemRenderProps.formattedDateTime}</Text>
-            <Text >{itemProps.location} - { itemRenderProps.distance ?? itemRenderProps.distance} </Text>
+            <Heading size="md" color="black">{itemProps.title}</Heading>
+            <Text fontSize="xs" color="primary.500">{itemRenderProps.formattedDateTime}</Text>
+            <Text color="black">{itemProps.location}{ itemRenderProps.distance ? " - " + itemRenderProps.distance :""} </Text>
           </Stack>
         </HStack>
       </Box >

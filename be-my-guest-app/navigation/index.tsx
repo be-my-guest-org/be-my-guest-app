@@ -12,13 +12,31 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import NewEventScreen from '../screens/NewEvent';
+import LoginScreen from '../screens/LoginScreen';
+import NewEventScreen from '../screens/NewEventScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import store from './../store/store'
+import { useSelector } from 'react-redux'
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import Actions from './../constants/actions';
+/*
+const mapStateToProps = (state) => ({
+	state: state
+});
+const mapDispatchToProps = (dispatch) => ({
+	actions: bindActionCreators(Actions, dispatch)
+})
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Navigation);
+*/
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -35,14 +53,29 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const selectToken = (state:any) => {
+  return state?.auth?.value?.token;
+};
+
 function RootNavigator() {
+  const tokenFromStore = useSelector(selectToken)
+  console.log("🚀 ~ tokenFromStore:", tokenFromStore);
+  let isSignedIn = !!tokenFromStore;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="NewEvent" component={NewEventScreen} />
-      </Stack.Group>
+      { isSignedIn ? (
+      <>
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="NewEvent" component={NewEventScreen} />
+        </Stack.Group>
+      </>)
+      : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 }

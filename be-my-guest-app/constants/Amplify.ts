@@ -12,10 +12,10 @@ const AMPLIFY_CONFIG = {
         //identityPoolRegion: 'XX-XXXX-X',
 
         // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: 'eu-west-3_aBBp7Fns3',
+        userPoolId: 'eu-west-3_3asW0cjTT',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: '7kva4d2546bac6epdffbqmnsdu',
+        userPoolWebClientId: '2d7ncf7a7n0l0sau707b1q2lla',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         //mandatorySignIn: false,
@@ -50,9 +50,13 @@ const AMPLIFY_CONFIG = {
         oauth: {
             domain: 'be-my-guest.auth.eu-west-3.amazoncognito.com',
             scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-            redirectSignIn: 'https://www.example.com/cb',
-            redirectSignOut: 'https://www.example.com/signout',
-            responseType: 'token' // or 'token', note that REFRESH token will only be generated when the responseType is code
+            //redirectSignIn: "https://www.example.com/cb",
+            //redirectSignOut: "https://www.example.com/signout",
+            //redirectSignIn: 'exp://127.0.0.1:19000/--/', // ok in DEV (only windows simulator)
+            redirectSignIn: 'exp://192.168.0.102:19000/--/',// ok in DEV (both windows simulator and in phone)
+            redirectSignOut: 'exp://192.168.0.102:19000/--/',
+            responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
+            pkce: true
         }
     }
 };

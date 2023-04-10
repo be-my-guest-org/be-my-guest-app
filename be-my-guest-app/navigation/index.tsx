@@ -24,7 +24,7 @@ import { useSelector } from 'react-redux'
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Actions from './../constants/actions';
+//import Actions from './../constants/actions';
 /*
 const mapStateToProps = (state) => ({
 	state: state

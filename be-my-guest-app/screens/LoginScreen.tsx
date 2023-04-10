@@ -11,7 +11,6 @@ import AMPLIFY_CONFIG from '../constants/Amplify';
 import { Amplify, Auth, Hub } from "aws-amplify";
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { RootTabScreenProps } from '../types';
-import AuthContext from "./../contexts/AuthContext";
 //import { useState } from 'react';
 import store from './../store/store'
 

@@ -16,42 +16,25 @@ import { Item, ItemRender } from '../models/models';
 import EventDataService from "../services/app.services";
 import { useEffect, useState } from "react";
 
-import AMPLIFY_CONFIG from '../constants/Amplify';
 import { Amplify, Auth, Hub } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import * as Linking from 'expo-linking';
+import store from './../store/store'
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
 
-  useEffect(() => {
+    useEffect(() => {
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
-        case "signIn":
-          console.log("🚀 ~ signIn:");
-          //setUser(data);
-          break;
         case "signOut":
-          console.log("🚀 ~ signIn:");
-          //setUser(null);
+          console.log("🚀 ~ signOut entrypoint:");
+          store.dispatch({ type: 'auth/logout', payload: {} });
           break;
       }
     });
 
-    Auth.currentAuthenticatedUser()
-      .then(currentUser => {
-        console.log("🚀 ~ currentUser:", currentUser);
-        //setUser(currentUser)
-      })
-      .catch((e) => {
-        console.log("🚀 ~ e:", e);
-        console.log("Not signed in")
-      });
-
     return unsubscribe;
   }, []);
 
-  Amplify.configure(AMPLIFY_CONFIG);
-  console.log("🚀 ~ AMPLIFY_CONFIG:", AMPLIFY_CONFIG);
-  const currentConfig = Auth.configure();
 
   const mockData: Item[] = [
     {
@@ -120,7 +103,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     );
   };
 
-  
+
   return (
     <View style={styles.page}>
       <HStack>
@@ -128,9 +111,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Spacer></Spacer>
       <Button onPress={() => navigation.navigate('NewEvent')}>Pubblica evento</Button>
       </HStack>
-      <Button onPress={() => Auth.federatedSignIn(
-        { provider: CognitoHostedUIIdentityProvider.Google }
-  )}>LogIn</Button>
+      <Button onPress={() => Auth.signOut()}>Sign out</Button>
       <FlatList
         data={mockData}
         renderItem={({item}: {item: Item}) => <Item

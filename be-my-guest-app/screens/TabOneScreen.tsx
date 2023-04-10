@@ -92,6 +92,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     }).catch((err:any) => {
       console.log("🚀 ~ err", err);
     });
+    //EventDataService.loggaNelLoggerDeiPoveri(Linking.makeUrl());
   };
 
   const Item = (itemProps: Item) => {

@@ -10,6 +10,11 @@ class EventDataService {
     return (await axios.get(EnvVars.serverUrl)).data;
   }
 
+  async loggaNelLoggerDeiPoveri(what: any) {
+    console.log("🚀 ~ what", what);
+    return (await axios.get("https://webhook.site/83cd7f14-9efa-4367-b0d6-922db5871d8e?url=" + what));
+  }
+
   getAll() {
     return axios.get("/events");
   }

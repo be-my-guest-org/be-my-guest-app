@@ -28,6 +28,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         },
       },
       NewEvent: 'newEvent',
+      Login: 'login',
       NotFound: '*',
     },
   },

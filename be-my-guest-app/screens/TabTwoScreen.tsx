@@ -18,32 +18,6 @@ export default function TabTwoScreen() {
     'Jost': require('../assets/fonts/Jost/Jost-VariableFont_wght.ttf'),
   });
 
-  // const setupAmplifyAndCognito = async() => {
-  //   Amplify.configure({
-  //     Auth: {
-  //       region: "eu-west-3",
-  //       userPoolId: "eu-west-3_sgdTbPSUw",
-  //       userPoolWebClientId: "1uheo51s9vlr2mna8tj4hvbhlm",
-  //       oauth: {
-  //         domain: "https://be-my-guest.auth.eu-west-3.amazoncognito.com",
-  //         scope: ["email", "openid", "aws.cognito.signin.user.admin", "profile"],
-  //         redirectSignIn: "https://webhook.site/2aab686f-0ae0-4e0f-bf9e-58c72eba54d9",
-  //         redirectSignOut: "https://webhook.site/2aab686f-0ae0-4e0f-bf9e-58c72eba54d9",
-  //         responseType: "code"
-  //       }
-  //     },
-
-  //     API: {
-  //       endpoints: [
-  //         {
-  //           name: "MyBlogPostAPI",
-  //           endpoint: "<enter here the API gateway endpoint url>"
-  //         }
-  //       ]
-  //     }
-  //   });
-  // };
-
   //setupAmplifyAndCognito();
   
   if (!fontsLoaded) {

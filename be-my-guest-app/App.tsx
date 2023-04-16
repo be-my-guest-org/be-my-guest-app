@@ -1,29 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import useCachedResources from './src/hooks/useCachedResources';
+import useColorScheme from './src/hooks/useColorScheme';
+import * as React from 'react';
+import Navigation from './src/navigation';
+import * as Linking from 'expo-linking';
 
 import { NativeBaseProvider, extendTheme  } from "native-base";
 import { Provider } from 'react-redux';
 
-import { configureStore } from '@reduxjs/toolkit'
-import tutorialReducer from './slices/event.slice';
+import store from './src/redux/store'
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  const url = Linking.useURL();
 
-const reducer = {
-  tutorials: tutorialReducer,
-  //auth: authReducer
-}
+  if (url) {
+    const { hostname, path, queryParams } = Linking.parse(url);
 
-const store = configureStore({
-  reducer: reducer,
-  devTools: true,
-});
+    console.log(
+      `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
+        queryParams
+      )}`
+    );
+  }
 
 const theme = extendTheme({
   colors: {

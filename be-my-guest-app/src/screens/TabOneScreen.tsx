@@ -8,14 +8,33 @@ import {
 
 import { Avatar, Container, Heading, Box, Text, Stack, HStack, Center, Button, Spacer} from "native-base";
 
-import { View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
-import { formatWithOptions } from 'date-fns/fp'
-import { it } from 'date-fns/locale'
+import { View } from '../shared-components/Themed';
+import { RootTabScreenProps } from '../../types';
+import { formatWithOptions } from 'date-fns/fp';
+import { it } from 'date-fns/locale';
 import { Item, ItemRender } from '../models/models';
 import EventDataService from "../services/app.services";
+import { useEffect, useState } from "react";
+
+import { Amplify, Auth, Hub } from "aws-amplify";
+import * as Linking from 'expo-linking';
+import store from './../redux/store'
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+
+    useEffect(() => {
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signOut":
+          console.log("🚀 ~ signOut entrypoint:");
+          store.dispatch({ type: 'auth/logout', payload: {} });
+          break;
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
 
   const mockData: Item[] = [
     {
@@ -45,7 +64,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     return {
       itemProps: itemData,
       distance: '',
-      userAvatarUrl: './../assets/images/icon.png',
+      userAvatarUrl: './../../assets/images/icon.png',
       formattedDateTime: formatWithOptions({ locale: it }, "eeee d MMMM '-' H:MM", itemData.dateTime) /*formatWithOptions({ locale: it }, "dddd mmmm - hh:MM")*/,
     } as ItemRender;
   }
@@ -56,6 +75,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     }).catch((err:any) => {
       console.log("🚀 ~ err", err);
     });
+    //EventDataService.loggaNelLoggerDeiPoveri(Linking.makeUrl());
   };
 
   const Item = (itemProps: Item) => {
@@ -69,7 +89,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <Center ml="5">
             <Avatar 
               source={
-                require('./../assets/images/icon.png')
+                require('./../../assets/images/icon.png')
               }
             />
           </Center>
@@ -83,7 +103,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     );
   };
 
-  
+
   return (
     <View style={styles.page}>
       <HStack>
@@ -91,6 +111,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Spacer></Spacer>
       <Button onPress={() => navigation.navigate('NewEvent')}>Pubblica evento</Button>
       </HStack>
+      <Button onPress={() => Auth.signOut()}>Sign out</Button>
       <FlatList
         data={mockData}
         renderItem={({item}: {item: Item}) => <Item

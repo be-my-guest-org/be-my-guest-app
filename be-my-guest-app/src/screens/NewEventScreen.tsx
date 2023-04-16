@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text } from '../components/Themed';
+import EditScreenInfo from '../shared-components/EditScreenInfo';
+import { Text } from '../shared-components/Themed';
 import { View, Input, Button, Stack, FormControl, WarningOutlineIcon, TextArea } from 'native-base';
 import React from 'react';
 import DatePicker from 'react-native-date-picker'

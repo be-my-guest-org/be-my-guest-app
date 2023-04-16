@@ -1,16 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
+import useCachedResources from './src/hooks/useCachedResources';
+import useColorScheme from './src/hooks/useColorScheme';
 import * as React from 'react';
-import Navigation from './navigation';
+import Navigation from './src/navigation';
 import * as Linking from 'expo-linking';
 
 import { NativeBaseProvider, extendTheme  } from "native-base";
 import { Provider } from 'react-redux';
 
-import store from './store/store'
+import store from './src/redux/store'
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Linking, Platform, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text } from '../components/Themed';
+//import EditScreenInfo from '../shared-components/EditScreenInfo';
+import { Text } from '../shared-components/Themed';
 import { View, Input, Button, Stack, FormControl, WarningOutlineIcon, TextArea } from 'native-base';
 import React, { useEffect } from 'react';
 import DatePicker from 'react-native-date-picker'
@@ -10,9 +10,9 @@ import AMPLIFY_CONFIG from '../constants/Amplify';
 
 import { Amplify, Auth, Hub } from "aws-amplify";
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { RootTabScreenProps } from '../types';
+import { RootTabScreenProps } from '../../types';
 //import { useState } from 'react';
-import store from './../store/store'
+import store from './../redux/store'
 
 //const [user, setUser] = useState();
 

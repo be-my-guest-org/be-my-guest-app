@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Item } from "../models/models";
-import EnvVars from "../dev_env";
+import EnvVars from "../../dev_env";
 
 class EventDataService {
   serverUrl: string = EnvVars.serverUrl;

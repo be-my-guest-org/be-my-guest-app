@@ -8,8 +8,8 @@ import {
 
 import { Avatar, Container, Heading, Box, Text, Stack, HStack, Center, Button, Spacer} from "native-base";
 
-import { View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+import { View } from '../shared-components/Themed';
+import { RootTabScreenProps } from '../../types';
 import { formatWithOptions } from 'date-fns/fp';
 import { it } from 'date-fns/locale';
 import { Item, ItemRender } from '../models/models';
@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 
 import { Amplify, Auth, Hub } from "aws-amplify";
 import * as Linking from 'expo-linking';
-import store from './../store/store'
+import store from './../redux/store'
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
 
@@ -64,7 +64,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     return {
       itemProps: itemData,
       distance: '',
-      userAvatarUrl: './../assets/images/icon.png',
+      userAvatarUrl: './../../assets/images/icon.png',
       formattedDateTime: formatWithOptions({ locale: it }, "eeee d MMMM '-' H:MM", itemData.dateTime) /*formatWithOptions({ locale: it }, "dddd mmmm - hh:MM")*/,
     } as ItemRender;
   }
@@ -89,7 +89,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <Center ml="5">
             <Avatar 
               source={
-                require('./../assets/images/icon.png')
+                require('./../../assets/images/icon.png')
               }
             />
           </Center>

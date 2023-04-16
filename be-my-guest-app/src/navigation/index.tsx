@@ -17,9 +17,9 @@ import NewEventScreen from '../screens/NewEventScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import store from './../store/store'
+import store from '../redux/store'
 import { useSelector } from 'react-redux'
 
 import {bindActionCreators} from 'redux';

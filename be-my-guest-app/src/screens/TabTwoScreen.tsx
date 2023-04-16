@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { useEffect } from 'react';
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View} from '../components/Themed';
+//import EditScreenInfo from '../shared-components/EditScreenInfo';
+import { Text, View} from '../shared-components/Themed';
 import { Button} from "native-base";
 
 // @ts-ignore
@@ -15,7 +15,7 @@ import { useFonts } from 'expo-font';
 export default function TabTwoScreen() {
 
   const [fontsLoaded] = useFonts({
-    'Jost': require('../assets/fonts/Jost/Jost-VariableFont_wght.ttf'),
+    'Jost': require('../../assets/fonts/Jost/Jost-VariableFont_wght.ttf'),
   });
 
   //setupAmplifyAndCognito();
@@ -27,12 +27,9 @@ export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ fontFamily: 'Jost', fontSize: 30 }}>Inter Black</Text>
-      {/* <Button onPress={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})} > */}
-  {/* Federated Sign In */}
-{/* </Button> */}
       <Text style={styles.title}>Tab Two</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+      {/*<EditScreenInfo path="/screens/TabTwoScreen.tsx" />*/}
     </View>
   );
 }

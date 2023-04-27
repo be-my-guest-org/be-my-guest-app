@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Item } from "../models/models";
 import EnvVars from "../../dev_env";
+import { axiosClient } from "./axiosClient";
 
 class EventDataService {
   serverUrl: string = EnvVars.serverUrl;
@@ -16,7 +17,7 @@ class EventDataService {
   }
 
   getAll() {
-    return axios.get("/events");
+    return axiosClient.get("/events");
   }
 
   get(id: string) {

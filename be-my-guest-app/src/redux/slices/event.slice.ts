@@ -15,7 +15,7 @@ export const getAllEvents : any = createAsyncThunk(
   async () => {
     try {
       const result = await EventDataService.getAll();
-      return result.data.events;
+      return result?.data?.events;
     } catch (e) {
       console.error("Error fetching events:", e);
     }

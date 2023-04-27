@@ -47,7 +47,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   //trigger the getAllEvents action
   useEffect(() => { 
-    dispatch(getAllEvents);
+    dispatch(getAllEvents());
   }, [events]);
 
 

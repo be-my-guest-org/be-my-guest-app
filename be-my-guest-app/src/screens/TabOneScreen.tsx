@@ -27,7 +27,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   //get events from store
   const eventsSelector = (state:any) => {
-    console.log("🚀 ~ tabOneScreen:selectEvents:", state);
     return state?.events?.value;
   };
   const events = useSelector(eventsSelector);
@@ -37,7 +36,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
         case "signOut":
-          console.log("🚀 ~ signOut entrypoint:");
+          //console.log("🚀 ~ signOut entrypoint:");
           store.dispatch({ type: 'auth/logout', payload: {} });
           break;
       }
@@ -48,7 +47,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   //trigger the getAllEvents action
   useEffect(() => { 
-    console.log("🚀 ~ useEffect:");
     dispatch(getAllEvents);
   }, [events]);
 

@@ -7,12 +7,12 @@ export const authSlice = createSlice({
     // add your non-async reducers here
     login: (state: any, action: any) => {
       const loginData = action.payload;
-      console.log("🚀 ~ store slice loginData", loginData);
+      //console.log("🚀 ~ store slice loginData", loginData);
       state.value = loginData;
     }, 
     logout: (state: any, action: any) => {
       const logoutData = action.payload;
-      console.log("🚀 ~ logoutData:", logoutData);
+      //console.log("🚀 ~ logoutData:", logoutData);
       state.value = {};
     },
   },

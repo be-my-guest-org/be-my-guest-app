@@ -35,12 +35,13 @@ export default function LoginScreen() {
       switch (event) {
         case "signIn":
         case 'cognitoHostedUI':
-          console.log("🚀 ~ signIn entrypoint:");
+          //console.log("🚀 ~ signIn entrypoint:");
           store.dispatch({ type: 'auth/login', payload: parseLoginData(data) });
           break;
       }
     });
 
+    /*
     Auth.currentAuthenticatedUser()
       .then(currentUser => {
         console.log("🚀 ~ useEffect currentUser:", currentUser);
@@ -49,7 +50,7 @@ export default function LoginScreen() {
         console.log("🚀 ~ useEffect e:", e);
         console.log("🚀 ~ useEffect, Not signed in")
       });
-
+    */
     return unsubscribe;
   }, []);
   

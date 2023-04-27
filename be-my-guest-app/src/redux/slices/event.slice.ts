@@ -24,7 +24,7 @@ export const getAllEvents : any = createAsyncThunk(
 
 export const eventSlice = createSlice({
   name: 'events',
-  initialState: [],
+  initialState: {data: []},
   reducers: {
     // add your non-async reducers here
     /*addEvent: (state: any, action: any) => {
@@ -36,7 +36,7 @@ export const eventSlice = createSlice({
       state.push(action.payload);
       },
     [getAllEvents.fulfilled]: (state: any, action: any) => {
-      state.events = action.payload;
+      state.data = [...action.payload];
     },
   }
 })

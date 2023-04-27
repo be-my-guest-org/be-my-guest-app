@@ -19,10 +19,21 @@ import { useEffect, useState } from "react";
 import { Amplify, Auth, Hub } from "aws-amplify";
 import * as Linking from 'expo-linking';
 import store from './../redux/store'
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllEvents } from '../redux/slices/event.slice';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+  const dispatch = useDispatch();
 
-    useEffect(() => {
+  //get events from store
+  const eventsSelector = (state:any) => {
+    console.log("🚀 ~ tabOneScreen:selectEvents:", state);
+    return state?.events?.value;
+  };
+  const events = useSelector(eventsSelector);
+
+  //listen for the end of login flow and then usubscribe
+  useEffect(() => {
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
         case "signOut":
@@ -31,9 +42,15 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           break;
       }
     });
-
     return unsubscribe;
   }, []);
+
+
+  //trigger the getAllEvents action
+  useEffect(() => { 
+    console.log("🚀 ~ useEffect:");
+    dispatch(getAllEvents);
+  }, [events]);
 
 
   const mockData: Item[] = [
@@ -113,9 +130,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       </HStack>
       <Button onPress={() => Auth.signOut()}>Sign out</Button>
       <FlatList
-        data={mockData}
+        data={events}
         renderItem={({item}: {item: Item}) => <Item
           id={item.id}
+          key={item.id}
           title={item.title}
           location={item.location}
           dateTime={item.dateTime}
@@ -134,3 +152,4 @@ const styles = StyleSheet.create({
     padding: 4
   }
 });
+

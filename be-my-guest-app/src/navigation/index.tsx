@@ -19,24 +19,8 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import store from '../redux/store'
 import { useSelector } from 'react-redux'
 
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-//import Actions from './../constants/actions';
-/*
-const mapStateToProps = (state) => ({
-	state: state
-});
-const mapDispatchToProps = (dispatch) => ({
-	actions: bindActionCreators(Actions, dispatch)
-})
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Navigation);
-*/
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -59,7 +43,7 @@ const selectToken = (state:any) => {
 
 function RootNavigator() {
   const tokenFromStore = useSelector(selectToken)
-  console.log("🚀 ~ tokenFromStore:", tokenFromStore);
+  console.log("🚀 ~ Root - there is tokenFromStore: ", !!tokenFromStore);
   let isSignedIn = !!tokenFromStore;
   return (
     <Stack.Navigator>

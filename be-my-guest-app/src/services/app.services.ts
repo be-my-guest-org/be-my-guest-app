@@ -1,9 +1,16 @@
 import axios from "axios";
-import { Item } from "../models/models";
+import { Event } from "../models/models";
 import EnvVars from "../../dev_env";
 import { axiosClient } from "./axiosClient";
 
-class EventDataService {
+class EventService {
+
+  private token: string;
+
+  constructor(token: string) {
+    this.token = token;
+  }
+
   serverUrl: string = EnvVars.serverUrl;
 
   async getSum(add1: number, add2: number) {
@@ -17,18 +24,18 @@ class EventDataService {
   }
 
   getAll() {
-    return axiosClient.get("/events");
+    return axiosClient(this.token).get("/events");
   }
 
   get(id: string) {
     return axios.get(`/events/${id}`);
   }
 
-  create(data: Item) {
+  create(data: Event) {
     return axios.post("/events", data);
   }
 
-  update(id: string, data: Item) {
+  update(id: string, data: Event) {
     return axios.put(`/events/${id}`, data);
   }
 
@@ -45,4 +52,4 @@ class EventDataService {
   }
 }
 
-export default new EventDataService();
+export default EventService;

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export function createAxiosClient({
   options,
-  getCurrentAccessToken,
+  token,
   //getCurrentRefreshToken,
   //refreshTokenUrl,
   logout,
@@ -14,7 +14,8 @@ export function createAxiosClient({
     (config) => {
       //console.log("🚀 ~ request intercepted with config:", config);
       if (config.authorization !== false) {
-        const token = getCurrentAccessToken();
+        //const token = getCurrentAccessToken();
+        //console.log("🚀 ~ token:", token);
         if (token) {
           config.headers.Authorization = "Bearer " + token;
         }

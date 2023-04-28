@@ -1,20 +1,27 @@
 import { createSlice, createAsyncThunk,} from "@reduxjs/toolkit";
-import { Item } from '../../models/models';
-import EventDataService from "../../services/app.services";
+import { Event } from '../../models/models';
+import EventService from "../../services/app.services";
+import { axiosClient } from "../../services/axiosClient";
 
 export const createEvent : any = createAsyncThunk(
     "events/create",
-    async (event: Item) => {
-      const sum = await EventDataService.create(event);
+    async (event: Event) => {
+      const sum = await EventService.create(event);
       console.log("🚀 ~ sum", sum);
     }
 );
 
+const getTokenFromStore = (thunkAPI: any) => {
+  return thunkAPI.getState().auth.value.token;
+}
+
 export const getAllEvents : any = createAsyncThunk(
   "events/getAll",
-  async () => {
+  async (_, thunkAPI) => {
     try {
-      const result = await EventDataService.getAll();
+      const token = getTokenFromStore(thunkAPI);
+      const eventService = new EventService(token);
+      const result = await eventService.getAll();
       return result?.data?.events;
     } catch (e) {
       console.error("Error fetching events:", e);

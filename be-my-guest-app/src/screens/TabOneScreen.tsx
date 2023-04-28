@@ -12,8 +12,8 @@ import { View } from '../shared-components/Themed';
 import { RootTabScreenProps } from '../../types';
 import { formatWithOptions } from 'date-fns/fp';
 import { it } from 'date-fns/locale';
-import { Item, ItemRender } from '../models/models';
-import EventDataService from "../services/app.services";
+import { Event, EventRendered } from '../models/models';
+import EventService from "../services/app.services";
 import { useEffect, useState } from "react";
 
 import { Amplify, Auth, Hub } from "aws-amplify";
@@ -52,7 +52,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }, []);
 
 
-  const mockData: Item[] = [
+  const mockData: Event[] = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Pranzo di lavoro 30 min',
@@ -76,18 +76,18 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     },
   ];
   
-  const mapItemForRender = (itemData: Item) => {
-    console.log("🚀 ~ mapItemForRender - itemData:", itemData);
+  const mapEventForRender = (itemData: Event) => {
+    //console.log("🚀 ~ mapEventForRender - itemData:", itemData);
     return {
       itemProps: itemData,
       distance: '',
       userAvatarUrl: './../../assets/images/icon.png',
       //formattedWhen: formatWithOptions({ locale: it }, "eeee d MMMM '-' H:MM", itemData.when) /*formatWithOptions({ locale: it }, "dddd mmmm - hh:MM")*/,
-    } as ItemRender;
+    } as EventRendered;
   }
 
   const callApi = (add1: number, add2: number) => {
-    EventDataService.getSum(add1, add2).then((res:any) => {
+    EventService.getSum(add1, add2).then((res:any) => {
       console.log("🚀 ~ res", res);
     }).catch((err:any) => {
       console.log("🚀 ~ err", err);
@@ -95,8 +95,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     //EventDataService.loggaNelLoggerDeiPoveri(Linking.makeUrl());
   };
 
-  const Item = (itemProps: Item) => {
-    const itemRenderProps = mapItemForRender(itemProps);
+  const Event = (itemProps: Event) => {
+    const itemRenderProps = mapEventForRender(itemProps);
     
     return (
       <Box
@@ -131,7 +131,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Button onPress={() => Auth.signOut()}>Sign out</Button>
       <FlatList
         data={events}
-        renderItem={({item}: {item: Item}) => <Item
+        renderEvent={({item}: {item: Event}) => <Event
           id={item.id}
           key={item.id}
           title={item.title}

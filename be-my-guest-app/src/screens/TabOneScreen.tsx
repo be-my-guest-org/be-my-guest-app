@@ -22,6 +22,10 @@ import store from './../redux/store'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../redux/slices/event.slice';
 
+interface EventProps {
+  eventRendered: EventRendered;
+}
+
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const dispatch = useDispatch();
 
@@ -52,52 +56,39 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }, []);
 
 
-  const mockData: Event[] = [
+  /*const mockData: Event[] = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Pranzo di lavoro 30 min',
-      when: new Date('1995-07-25T20:00:00'),
-      where: 'Veronella camporella',
-      userId: 'userId1'
+      when: '1995-07-25T20:00:00',
+      //where: 'Veronella camporella',
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       title: 'Frittata in compagnia',
-      when: new Date('1995-07-25T20:00:00'),
-      where: 'Veronella camporella',
-      userId: 'userId1'
+      when: '1995-07-25T20:00:00',
+      //where: 'Veronella camporella',
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
       title: 'Popi gratis per tutti',
-      when: new Date('1995-07-25T20:00:00'),
-      where: 'Veronella camporella',
-      userId: 'userId1'
+      when: '1995-07-25T20:00:00',
+      //where: 'Veronella camporella',
     },
-  ];
-  
-  const mapEventForRender = (itemData: Event) => {
-    //console.log("🚀 ~ mapEventForRender - itemData:", itemData);
-    return {
-      itemProps: itemData,
-      distance: '',
-      userAvatarUrl: './../../assets/images/icon.png',
-      //formattedWhen: formatWithOptions({ locale: it }, "eeee d MMMM '-' H:MM", itemData.when) /*formatWithOptions({ locale: it }, "dddd mmmm - hh:MM")*/,
-    } as EventRendered;
-  }
+  ];*/
+
 
   const callApi = (add1: number, add2: number) => {
-    EventService.getSum(add1, add2).then((res:any) => {
+    /*EventService.getSum(add1, add2).then((res:any) => {
       console.log("🚀 ~ res", res);
     }).catch((err:any) => {
       console.log("🚀 ~ err", err);
-    });
+    });*/
     //EventDataService.loggaNelLoggerDeiPoveri(Linking.makeUrl());
   };
 
-  const Event = (itemProps: Event) => {
-    const itemRenderProps = mapEventForRender(itemProps);
-    
+  const Event = (eventProps: EventProps) => {    
+    const eventRendered = eventProps.eventRendered;
     return (
       <Box
       rounded="lg" borderColor="coolGray.100" borderWidth="1" borderRightWidth="2" borderBottomWidth="3" m="1"
@@ -111,9 +102,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             />
           </Center>
           <Stack p="5">
-            <Heading size="md" color="black">{itemProps.title}</Heading>
-            <Text fontSize="xs" color="primary.500">{itemRenderProps.formattedDateTime}</Text>
-            <Text color="black">{itemProps.where}{ itemRenderProps.distance ? " - " + itemRenderProps.distance :""} </Text>
+            <Heading size="md" color="black">{eventRendered.title}</Heading>
+            <Text fontSize="xs" color="primary.500">{eventRendered.formattedWhen}</Text>
+            <Text color="black">{eventRendered.formattedWhere}{ eventRendered.distance ? " - " + eventRendered.distance :""} </Text>
           </Stack>
         </HStack>
       </Box >
@@ -131,15 +122,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Button onPress={() => Auth.signOut()}>Sign out</Button>
       <FlatList
         data={events}
-        renderEvent={({item}: {item: Event}) => <Event
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          where={item.where?.city}
-          when={item.when}
-          userId={item.userId}
-  />}
-        keyExtractor={item => item.id}
+        renderItem={({item}) => <Event
+          eventRendered={item}
+        />}
+        keyExtractor={eventRendered => eventRendered.event.id}
       />
       <Button onPress={() => callApi(5, 2)}>Click Me</Button>
       <Button onPress={() => dispatch(getAllEvents())}>Aggiorna eventi</Button>

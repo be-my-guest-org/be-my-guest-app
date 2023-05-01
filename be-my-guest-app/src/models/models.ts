@@ -26,4 +26,4 @@ export interface Coordinates {
     longitude: number;
 }
 
-export interface EventRendered extends Event {event: Event, title: string, formattedDateTime: string, location: string, distance: string, userAvatarUrl: string};
+export interface EventRendered {event: Event, title: string, formattedWhen: string, formattedWhere: string, distance: string, userAvatarUrl: string};

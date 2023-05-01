@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk,} from "@reduxjs/toolkit";
-import { Event } from '../../models/models';
+import { Event, EventRendered } from '../../models/models';
 import EventService from "../../services/app.services";
-import { axiosClient } from "../../services/axiosClient";
+import { formatWithOptions } from "date-fns/fp";
+import { it } from 'date-fns/locale';
 
 export const createEvent : any = createAsyncThunk(
     "events/create",
@@ -22,12 +23,29 @@ export const getAllEvents : any = createAsyncThunk(
       const token = getTokenFromStore(thunkAPI);
       const eventService = new EventService(token);
       const result = await eventService.getAll();
-      return result?.data?.events;
+      const events = result?.data?.events;
+      console.log("🚀 ~ events:", events);
+      const eventsToRender = events.map(e => mapEventForRender(e));
+      console.log("🚀 ~ eventsToRender:", eventsToRender);
+      return eventsToRender;
     } catch (e) {
       console.error("Error fetching events:", e);
     }
   }
 );
+
+const mapEventForRender = (eventData: Event) : EventRendered=> {
+  //console.log("🚀 ~ mapEventForRender - eventData:", eventData);
+  const eventRendered: EventRendered = {
+    event: eventData,
+    title: eventData.title,
+    distance: '5km',
+    userAvatarUrl: './../../assets/images/icon.png',
+    formattedWhere: "Villorba",
+    formattedWhen: formatWithOptions({ locale: it }, "eeee d MMMM '-' H:MM", new Date(eventData.when)) /*formatWithOptions({ locale: it }, "dddd mmmm - hh:MM")*/,
+  };
+  return eventRendered;
+}
 
 export const eventSlice = createSlice({
   name: 'events',

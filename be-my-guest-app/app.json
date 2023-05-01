@@ -25,10 +25,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jordangiulia.be-my-guest-app"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
-  }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c0939ad4-998e-4e51-9c35-9b9cba54438c"
+      }
+    },
+    "owner": "giuliapetenazzi",
+    "sdkVersion": "47.0.0",
+    "entryPoint": ".vscode\\exponentIndex.js"
+  },
+  "name": "be-my-guest-app"
 }

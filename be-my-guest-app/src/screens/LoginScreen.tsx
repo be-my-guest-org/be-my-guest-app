@@ -13,6 +13,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { RootTabScreenProps } from '../../types';
 //import { useState } from 'react';
 import store from './../redux/store'
+import { useSelector } from 'react-redux';
 
 //const [user, setUser] = useState();
 
@@ -30,7 +31,13 @@ export default function LoginScreen() {
     };
   };
 
+  const selectFirstLoginDone = (state:any) => {
+    return state?.auth?.value?.firstLoginDone;
+  };
+  const firstLoginDone = useSelector(selectFirstLoginDone)
+
   useEffect(() => {
+    if (!firstLoginDone) Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google });
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
         case "signIn":

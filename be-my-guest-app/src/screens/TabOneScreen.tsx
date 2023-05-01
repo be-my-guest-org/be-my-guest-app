@@ -31,7 +31,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   //get events from store
   const eventsSelector = (state:any) => {
-    console.log("🚀 ~ eventsSelector state:", state);
+    //console.log("🚀 ~ eventsSelector state:", state);
     return state?.events?.data;
   };
   const events = useSelector(eventsSelector);

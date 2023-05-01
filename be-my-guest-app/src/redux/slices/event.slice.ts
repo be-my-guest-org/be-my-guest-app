@@ -24,9 +24,9 @@ export const getAllEvents : any = createAsyncThunk(
       const eventService = new EventService(token);
       const result = await eventService.getAll();
       const events = result?.data?.events;
-      console.log("🚀 ~ events:", events);
+      //console.log("🚀 ~ events:", events);
       const eventsToRender = events.map(e => mapEventForRender(e));
-      console.log("🚀 ~ eventsToRender:", eventsToRender);
+      //console.log("🚀 ~ eventsToRender:", eventsToRender);
       return eventsToRender;
     } catch (e) {
       console.error("Error fetching events:", e);

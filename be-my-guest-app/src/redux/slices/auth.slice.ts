@@ -8,12 +8,12 @@ export const authSlice = createSlice({
     login: (state: any, action: any) => {
       const loginData = action.payload;
       //console.log("🚀 ~ store slice loginData", loginData);
-      state.value = loginData;
+      state.value = {...loginData, firstLoginDone: true };
     }, 
     logout: (state: any, action: any) => {
       const logoutData = action.payload;
       //console.log("🚀 ~ logoutData:", logoutData);
-      state.value = {};
+      state.value = {firstLoginDone: true };
     },
   },
 })

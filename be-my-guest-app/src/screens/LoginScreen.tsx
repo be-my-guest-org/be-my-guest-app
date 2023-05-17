@@ -14,6 +14,7 @@ import { RootTabScreenProps } from '../../types';
 //import { useState } from 'react';
 import store from './../redux/store'
 import { useSelector } from 'react-redux';
+import Constants from 'expo-constants';
 
 //const [user, setUser] = useState();
 
@@ -64,7 +65,8 @@ export default function LoginScreen() {
   //const appUrls = Linking.makeUrl();
   //console.log("🚀 ~ appUrls:", appUrls);
 
-  Amplify.configure(AMPLIFY_CONFIG);
+  //Amplify.configure(AMPLIFY_CONFIG);
+  Amplify.configure(Constants?.expoConfig?.extra?.env.amplifyConfig);
   const currentConfig = Auth.configure();
 
   return (

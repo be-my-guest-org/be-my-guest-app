@@ -1,4 +1,4 @@
-const AMPLIFY_CONFIG = {
+const AMPLIFY_CONFIG_PROD = {
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
@@ -12,10 +12,10 @@ const AMPLIFY_CONFIG = {
         //identityPoolRegion: 'XX-XXXX-X',
 
         // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: 'eu-central-1_t6HRGS7ml',
+        userPoolId: 'eu-central-1_vaGcV99Zw',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: '106ao2hnpdjljbgl2etdf3dvmq',
+        userPoolWebClientId: '3965gsiegkj9hir9plg9ki0shj',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         //mandatorySignIn: false,
